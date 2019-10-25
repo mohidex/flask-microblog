@@ -6,6 +6,7 @@ __pycache__/
 .idea
 .flaskenv
 app.db
+logs
 
 # C extensions
 *.so
