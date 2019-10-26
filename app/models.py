@@ -1,5 +1,7 @@
+import jwt
 from datetime import datetime
-from app import db
+from time import time
+from app import app, db
 from hashlib import md5
 from app import login
 from flask_login import UserMixin
@@ -15,7 +17,7 @@ followers = db.Table(
     'followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
-    )
+)
 
 
 class User(UserMixin, db.Model):
@@ -56,10 +58,26 @@ class User(UserMixin, db.Model):
         return self.followed.filter(followers.c.followed_id == user.id).count() > 0
 
     def followed_posts(self):
-        followed = Post.query.join(followers, (followers.c.followed_id == Post.user_id))\
+        followed = Post.query.join(followers, (followers.c.followed_id == Post.user_id)) \
             .filter(followers.c.follower_id == self.id)
         own = Post.query.filter_by(user_id=self.id)
         return followed.union(own).order_by(Post.timestamp.desc())
+
+    def get_reset_password_token(self, expires_in=600):
+        return jwt.encode(
+            {'reset_password': self.id, 'exp': time() + expires_in},
+            app.config['SECRET_KEY'],
+            algorithm='HS256'
+        ).decode('utf-8')
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            id = jwt.decode(token, app.config['SECRET_KEY'],
+                            algorithms=['HS256'])['reset_password']
+        except:
+            return
+        return User.query.get(id)
 
     def __repr__(self):
         return f'<User {self.username}>'
@@ -73,5 +91,3 @@ class Post(db.Model):
 
     def __repr__(self):
         return f'<Post {self.body}>'
-
-
