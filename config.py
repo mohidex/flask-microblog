@@ -10,7 +10,7 @@ class Config(object):
     # disable the Flask-SQLAlchemy features that we don't need
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    POSTS_PER_PAGE = 2
+    POSTS_PER_PAGE = 20
 
     # configure mail server
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
