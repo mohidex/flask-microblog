@@ -1,6 +1,7 @@
 import os
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
+from elasticsearch import Elasticsearch
 from flask import Flask
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -30,6 +31,7 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     login.init_app(app)
 
+    # Blueprint registration
     from app.errors import bp as error_bp
     app.register_blueprint(error_bp)
 
@@ -38,6 +40,10 @@ def create_app(config_class=Config):
 
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
+
+    # searching mechanism with elastic search
+    app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
+        if app.config['ELASTICSEARCH_URL'] else None
 
     if not app.debug and not app.testing:
         if app.config['MAIL_SERVER']:

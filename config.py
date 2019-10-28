@@ -23,3 +23,5 @@ class Config(object):
     ADMINS = ['mohidul.nu@gmail.com']
 
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
+
+    print(ELASTICSEARCH_URL)
