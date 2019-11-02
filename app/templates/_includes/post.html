@@ -13,8 +13,9 @@
                     </a>
                 </span>
             {% endset %}
-            {{ user_link }} said {{moment(post.timestamp).fromNow() }}
+            {{ user_link }} on {{moment(post.timestamp).fromNow() }}
             <br>
+            {{ post.title }} <br>
             {{ post.body }}
         </td>
     </tr>
