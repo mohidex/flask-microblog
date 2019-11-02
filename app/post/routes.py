@@ -18,7 +18,7 @@ def post_detail(post_id):
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, body=form.post.data, author=current_user)
+        post = Post(title=form.title.data, body=form.body.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
@@ -42,3 +42,16 @@ def update_post(post_id):
     form.title.data = post.title
     form.body.data = post.body
     return render_template('post/create_post.html', title='Update Post', form=form)
+
+
+
+@bp.route('/post/<int:post_id>/delete', methods=['POST'])
+@login_required
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash('You post has been deleted!')
+    return redirect(url_for('main.index'))
