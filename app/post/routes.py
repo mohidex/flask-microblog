@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, abort
 from app.post import bp
 from app import db
 from flask_login import login_required, current_user
@@ -24,3 +24,21 @@ def new_post():
         flash('Your post is now live!')
         return redirect(url_for('main.index'))
     return render_template('post/create_post.html', title='New Post', form=form)
+
+
+@bp.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
+@login_required
+def update_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    form = PostForm()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.body = form.body.data
+        db.session.commit()
+        flash('Your post has been updated!')
+        return redirect(url_for('post.post_detail', post_id=post.id))
+    form.title.data = post.title
+    form.body.data = post.body
+    return render_template('post/create_post.html', title='Update Post', form=form)
