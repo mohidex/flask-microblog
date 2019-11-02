@@ -41,6 +41,9 @@ def create_app(config_class=Config):
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
 
+    from app.post import bp as post_bp
+    app.register_blueprint(post_bp)
+
     # searching mechanism with elastic search
     app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
         if app.config['ELASTICSEARCH_URL'] else None

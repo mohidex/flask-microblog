@@ -15,8 +15,9 @@
             {% endset %}
             {{ user_link }} on {{moment(post.timestamp).fromNow() }}
             <br>
-            {{ post.title }} <br>
-            {{ post.body }}
+            <a href="{{ url_for('post.post_detail', post_id=post.id) }}">
+                {{ post.title }}
+            </a>
         </td>
     </tr>
 </table>
