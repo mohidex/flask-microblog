@@ -133,6 +133,15 @@ class Post(db.Model, SearchableMixin):
     body = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    comments = db.relationship('Comment', backref='commented_on', lazy='dynamic')
 
     def __repr__(self):
         return f'<Post {self.title}>'
+
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.String(255))
+    commneted_on = db.Column(db.Integer, db.ForeignKey('post.id'))
+    commented_by = db.Column(db.Integer, db.ForeignKey('user.id'))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
