@@ -25,8 +25,16 @@
                 {% if current_user.is_anonymous %}
                 <li><a href="{{ url_for('auth.login') }}">Login</a></li>
                 {% else %}
-                <li><a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a></li>
-                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ current_user.username }}<span aria-hidden="true">&#9660;</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div><a class="dropdown-item" href="{{ url_for('main.user', username=current_user.username) }}">Profile</a></div>
+                    <div><a class="dropdown-item" href="{{ url_for('post.new_post') }}">New Post</a></div>
+                    <div><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></div>
+                </div>
+                </li>
                 {% endif %}
             </ul>
         </div>

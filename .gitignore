@@ -7,7 +7,7 @@ __pycache__/
 .flaskenv
 app.db
 logs
-
+.vscode/
 # C extensions
 *.so
 
