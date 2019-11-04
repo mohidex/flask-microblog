@@ -127,7 +127,7 @@ def load_user(id):
 
 
 class Post(db.Model, SearchableMixin):
-    __searchable__ = ['body']
+    __searchable__ = ['title', 'body']
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
     body = db.Column(db.Text)

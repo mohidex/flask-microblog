@@ -2,7 +2,7 @@
     <tr>
         <td width="70px">
             <a href="{{ url_for('main.user', username=post.author.username) }}">
-                <img src="{{ post.author.avatar(70) }}" />
+                <img src="{{ post.author.avatar(80) }}" />
             </a>
         </td>
         <td>
@@ -15,9 +15,10 @@
             {% endset %}
             {{ user_link }} on {{moment(post.timestamp).fromNow() }}
             <br>
-            <a href="{{ url_for('post.post_detail', post_id=post.id) }}">
+            <a class="post-title" href="{{ url_for('post.post_detail', post_id=post.id) }}">
                 {{ post.title }}
-            </a>
+            </a> <br>
+            <p>{{ post.body[:250] }} <br> <a href="{{ url_for('post.post_detail', post_id=post.id) }}"> read more</a></p>
         </td>
     </tr>
 </table>
