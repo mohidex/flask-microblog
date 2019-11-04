@@ -1,16 +1,29 @@
-from flask import render_template, flash, redirect, url_for, abort
+from flask import render_template, flash, redirect, url_for, abort, request
 from app.post import bp
 from app import db
 from flask_login import login_required, current_user
-from app.models import Post
-from app.post.forms import PostForm
+from app.models import Post, Comment
+from app.post.forms import PostForm, CommnetForm
 
 
 @login_required
-@bp.route('/post/<int:post_id>')
+@bp.route('/post/<int:post_id>', methods=['GET', 'POST'])
 def post_detail(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template('post/detail_post.html', title=post.title, post=post)
+    form = CommnetForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            comment = Comment(
+                comment=form.comment.data,
+                post=post,
+                author=current_user
+            )
+            db.session.add(comment)
+            db.session.commit()
+            flash('You commented on this post!')
+            return redirect(url_for('post.post_detail', post_id=post.id))
+    comments = post.comments.order_by(Comment.timestamp.desc())
+    return render_template('post/detail_post.html', title=post.title, post=post, form=form, comments=comments)
 
 
 @login_required
