@@ -1,0 +1,15 @@
+<table class="table table-hover">
+    <tr>
+        <td width="2px">
+            <img src="{{ comment.author.avatar(40) }}" />
+        </td>
+        <td>
+            <a href="{{ url_for('main.user', username=comment.author.username) }}">
+                {{ comment.author.username }}
+            </a>
+            on {{moment(comment.timestamp).fromNow() }}
+            <br>
+            <p style="font-size: 16;">{{ comment.comment }}</p>
+        </td>
+    </tr>
+</table>
