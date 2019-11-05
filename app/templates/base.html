@@ -31,6 +31,10 @@
 {% block scripts %}
     {{ super() }}
     {{ moment.include_moment() }}
+    {{ editormd.add_editormd_resource(autoLoadModules=False) }}
+    {{ editormd.add_editormd(toolbarIcons=["undo", "redo", "|", "bold", "del", "italic","quote", "|", "list-ul", "list-ol", "hr", "|", "link","reference-link","image","|","code-block", "table","html-entities","|", "goto-line", "watch", "unwatch","preview","fullscreen", "help"], autoHeight=True, appendMarkdown="\n\n\n\n\n\n\n\n\n\n\n\n\n\n",autoLoadModules=False, autoLoadPlugins=True) }}
+    {{ editormd.add_editormd_previewer_resource() }}
+
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <script>
          $(function () {

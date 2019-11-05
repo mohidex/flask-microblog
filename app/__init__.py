@@ -10,6 +10,7 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
+from flask_editormd import Editormd
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -19,6 +20,7 @@ login.login_message = 'Please log in to access this page.'
 mail = Mail()
 bootstrap = Bootstrap()
 moment = Moment()
+editormd = Editormd()
 
 
 def create_app(config_class=Config):
@@ -30,6 +32,7 @@ def create_app(config_class=Config):
     bootstrap.init_app(app)
     migrate.init_app(app, db)
     login.init_app(app)
+    editormd.init_app(app)
 
     # Blueprint registration
     from app.errors import bp as error_bp
