@@ -3,6 +3,29 @@
 A full featured blog application using :snake: Python Flask framework where an authenticated user can create a new post in markdown. A user can update and delete his/her post. An user can follow/unfollow other user and only see the post he/she follwing in his/her home page.
 
 ---
+## Some cool features:
+
+### 1. User popup in homepage.
+### 2. Searching with Elasticsearch.
+### 3. User follow/unfollow system.
+
+<img src="assests/home_page.png"> 
+
+
+### 4. Comment on post.
+
+<img src="assests/comment.png"> 
+
+
+### 5. CRUD operation on Post.
+
+<img src="assests/post_delete.png"> 
+
+
+### 6. Create post in Markdown.
+
+<img src="assests/create_post.png"> 
+
 
 ## Running the application
 
