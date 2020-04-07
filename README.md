@@ -58,3 +58,5 @@ export FLASK_DEBUG=1                  # Debug mode on
 flask run 
 ```
 Then visit `http://localhost:5000` :rocket: enjoy the app.
+
+The inital code was written following Miguel Grinberg's [Flask Mega Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
